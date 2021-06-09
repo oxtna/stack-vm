@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <errno.h>
 
 #define MAXIMUM_LINE_LENGTH 255
@@ -19,7 +20,13 @@ int main(int argc, char *argv[])
 			printf("STACK_VM >> ");
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
-				printf("%s", line_buffer);
+				char *token = line_buffer;
+				while ((token = strtok(token, " ")) != NULL)
+				{
+					printf("%s    ", token); // TODO: do something useful here
+					token = NULL;
+				}
+				printf("\n");
 			}
 			//if (errno); // TODO: catch errors
 		}
