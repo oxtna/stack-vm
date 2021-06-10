@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
 			printf("STACK_VM >> ");
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
+				// remove trailing newline character
+				line_buffer[strcspn(line_buffer, "\n")]  = 0;
 				char *token = line_buffer;
 				while ((token = strtok(token, " ")) != NULL)
 				{
