@@ -38,6 +38,10 @@ int main(int argc, char *argv[])
 						;
 					else if (!strcmp(token, "print"))
 						;
+					else
+					{
+						fprintf(stderr, "\nInstruction \"%s\" was not recognized", token);
+					}
 					token = NULL;
 				}
 				printf("\n");
