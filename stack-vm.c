@@ -23,7 +23,21 @@ int main(int argc, char *argv[])
 				char *token = line_buffer;
 				while ((token = strtok(token, " ")) != NULL)
 				{
-					printf("%s    ", token); // TODO: do something useful here
+					// TODO: change this if else if chain
+					if (!strcmp(token, "push"))
+						;
+					else if (!strcmp(token, "pop"))
+						;
+					else if (!strcmp(token, "dup"))
+						;
+					else if (!strcmp(token, "add"))
+						;
+					else if (!strcmp(token, "ifeq"))
+						;
+					else if (!strcmp(token, "jump"))
+						;
+					else if (!strcmp(token, "print"))
+						;
 					token = NULL;
 				}
 				printf("\n");
