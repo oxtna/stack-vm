@@ -14,9 +14,10 @@ int main(int argc, char *argv[])
 	else // run as a REPL
 	{
 		char line_buffer[MAXIMUM_LINE_LENGTH + 1]; // 1 extra char for the null characters
+		unsigned int command_counter = 1;
 		while (true)
 		{
-			printf("STACK_VM >> ");
+			printf("(%u)STACK_VM >> ", &command_counter);
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
 				// remove trailing newline character
@@ -26,7 +27,9 @@ int main(int argc, char *argv[])
 				{
 					// TODO: change this if else if chain
 					if (!strcmp(token, "push"))
-						;
+					{
+
+					}
 					else if (!strcmp(token, "pop"))
 						;
 					else if (!strcmp(token, "dup"))
@@ -47,6 +50,7 @@ int main(int argc, char *argv[])
 				}
 				printf("\n");
 			}
+			command_counter++;
 			// TODO: catch errors
 		}
 	}
