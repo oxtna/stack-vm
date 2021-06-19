@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <errno.h>
 #include "stack.h"
 
 #define MAXIMUM_LINE_LENGTH 255
@@ -17,7 +16,6 @@ int main(int argc, char *argv[])
 		char line_buffer[MAXIMUM_LINE_LENGTH + 1]; // 1 extra char for the null characters
 		while (true)
 		{
-			errno = 0;
 			printf("STACK_VM >> ");
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
@@ -49,7 +47,7 @@ int main(int argc, char *argv[])
 				}
 				printf("\n");
 			}
-			//if (errno); // TODO: catch errors
+			// TODO: catch errors
 		}
 	}
 	return 0;
