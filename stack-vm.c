@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 		unsigned int command_counter = 1;
 		while (true)
 		{
-			printf("(%u)STACK_VM >> ", &command_counter);
+			printf("(%u)STACK_VM >> ", command_counter);
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
 				// remove trailing newline character
