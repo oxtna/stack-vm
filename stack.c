@@ -1,73 +1,106 @@
 #include "stack.h"
 #include <stdlib.h>
+#include <limits.h>
 
-void _push(stack s, int value)
+#define ERROR INT_MIN
+#define BOOL_ERROR CHAR_MIN
+#define SUCCESS 0
+
+struct _node
 {
-	// sanity check
-	if (s == NULL)
-	{
-		return;
-	}
+	struct _node *next;
+	struct _node *previous;
+	int value;
+};
 
-	while (s->next != NULL)
-	{
-		s = s->next;
-	}
+struct _stack
+{
+	struct _node *top;
+	struct _node *bottom;
+};
 
-	s->next = malloc(sizeof(node));
-	if (s->next != NULL)
+stack *s_create()
+{
+	stack *new_stack = malloc(sizeof(stack));
+	if (new_stack != NULL)
 	{
-		s = s->next;
-		s->next = NULL;
-		s->value = value;
+		new_stack->bottom = NULL;
+		new_stack->top = NULL;
 	}
+	else
+	{
+		exit(EXIT_FAILURE);
+	}
+	return new_stack;
 }
 
-int _pop(stack s)
+int s_push(stack *s, int value)
 {
 	// sanity check
 	if (s == NULL)
 	{
-		return 0;
+		return ERROR;
 	}
 
-	node* previous;
-
-	while (s->next != NULL)
+	struct _node *new_node = malloc(sizeof(struct _node));
+	if (new_node == NULL)
 	{
-		previous = s;
-		s = s->next;
+		return ERROR;
+	}
+	new_node->value = value;
+	new_node->next = NULL;
+
+	if (s->bottom == NULL)
+	{
+		s->bottom = new_node;
+		s->top = new_node;
+		new_node->previous = NULL;
+	}
+	else
+	{
+		s->top->next = new_node;
+		new_node->previous = s->top;
+		s->top = new_node;
+	}
+	return SUCCESS;
+}
+
+int s_pop(stack *s)
+{
+	// sanity check
+	if (s == NULL)
+	{
+		return ERROR;
 	}
 
-	int value = s->value;
-	previous->next = NULL;
-	free(s);
+	if (s->top == NULL)
+	{
+		return ERROR;
+	}
+	int value = s->top->value;
+	s->top->previous->next = NULL;
+	free(s->top);
 	return value;
 }
 
-int _peek(stack s)
+int s_peek(stack *s)
 {
 	// sanity check
 	if (s == NULL)
 	{
-		return 0;
+		return ERROR;
 	}
 
-	while (s->next != NULL)
-	{
-		s = s->next;
-	}
-
-	return s->value;
+	return s->top->value;
 }
 
-bool _is_empty(stack s)
+bool s_is_empty(stack *s)
 {
 	// sanity check
 	if (s == NULL)
 	{
-		return false;
+		return BOOL_ERROR;
 	}
 
-	return (s->next == NULL ? true : false);
+	return (s->top == NULL ? true : false);
 }

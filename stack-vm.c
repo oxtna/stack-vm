@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <errno.h>
+#include "stack.h"
 
 #define MAXIMUM_LINE_LENGTH 255
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
 			if (fgets(line_buffer, sizeof(line_buffer), stdin) != NULL)
 			{
 				// remove trailing newline character
-				line_buffer[strcspn(line_buffer, "\n")]  = 0;
+				line_buffer[strcspn(line_buffer, "\n")] = 0;
 				char *token = line_buffer;
 				while ((token = strtok(token, " ")) != NULL)
 				{
