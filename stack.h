@@ -1,4 +1,9 @@
 #include <stdbool.h>
+#include <limits.h>
+
+#define ERROR INT_MIN
+#define BOOL_ERROR CHAR_MIN
+#define SUCCESS 0
 
 typedef struct _stack stack;
 
