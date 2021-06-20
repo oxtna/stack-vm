@@ -29,18 +29,18 @@ stack *s_create()
 	return new_stack;
 }
 
-int s_push(stack *s, int value)
+void s_push(stack *s, int value)
 {
 	// sanity check
 	if (s == NULL)
 	{
-		return ERROR;
+		exit(EXIT_FAILURE);
 	}
 
 	struct _node *new_node = malloc(sizeof(struct _node));
 	if (new_node == NULL)
 	{
-		return ERROR;
+		exit(EXIT_FAILURE);
 	}
 	new_node->value = value;
 	new_node->next = NULL;
@@ -57,7 +57,6 @@ int s_push(stack *s, int value)
 		new_node->previous = s->top;
 		s->top = new_node;
 	}
-	return SUCCESS;
 }
 
 int s_pop(stack *s)
@@ -65,12 +64,12 @@ int s_pop(stack *s)
 	// sanity check
 	if (s == NULL)
 	{
-		return ERROR;
+		exit(EXIT_FAILURE);
 	}
 
 	if (s->top == NULL)
 	{
-		return ERROR;
+		exit(EXIT_FAILURE);
 	}
 	int value = s->top->value;
 	s->top->previous->next = NULL;
@@ -83,7 +82,7 @@ int s_peek(stack *s)
 	// sanity check
 	if (s == NULL)
 	{
-		return ERROR;
+		exit(EXIT_FAILURE);
 	}
 
 	return s->top->value;
@@ -94,7 +93,7 @@ bool s_is_empty(stack *s)
 	// sanity check
 	if (s == NULL)
 	{
-		return BOOL_ERROR;
+		exit(EXIT_FAILURE);
 	}
 
 	return (s->top == NULL ? true : false);
