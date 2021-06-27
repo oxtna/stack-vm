@@ -4,25 +4,18 @@
 struct _node
 {
 	struct _node *next;
-	struct _node *previous;
 	int value;
 };
 
 struct _stack
 {
 	struct _node *top;
-	struct _node *bottom;
 };
 
 stack *s_create()
 {
-	stack *new_stack = malloc(sizeof(stack));
-	if (new_stack != NULL)
-	{
-		new_stack->bottom = NULL;
-		new_stack->top = NULL;
-	}
-	else
+	stack *new_stack = calloc(1, sizeof(stack));
+	if (new_stack == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
@@ -43,20 +36,8 @@ void s_push(stack *s, int value)
 		exit(EXIT_FAILURE);
 	}
 	new_node->value = value;
-	new_node->next = NULL;
-
-	if (s->bottom == NULL)
-	{
-		s->bottom = new_node;
-		s->top = new_node;
-		new_node->previous = NULL;
-	}
-	else
-	{
-		s->top->next = new_node;
-		new_node->previous = s->top;
-		s->top = new_node;
-	}
+	new_node->next = s->top;
+	s->top = new_node;
 }
 
 int s_pop(stack *s)
@@ -71,9 +52,11 @@ int s_pop(stack *s)
 	{
 		exit(EXIT_FAILURE);
 	}
+
 	int value = s->top->value;
-	s->top->previous->next = NULL;
+	struct _node* next_node = s->top->next;
 	free(s->top);
+	s->top = next_node;
 	return value;
 }
 
@@ -96,5 +79,5 @@ bool s_is_empty(stack *s)
 		exit(EXIT_FAILURE);
 	}
 
-	return (s->top == NULL ? true : false);
+	return (s->top == NULL);
 }
