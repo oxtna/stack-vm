@@ -1,3 +1,6 @@
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
+
 #define TOKEN_STRING_LENGTH 11
 
 typedef enum token_type
@@ -29,3 +32,5 @@ tokenizer *init_tokenizer(char *input);
 // Get the next token from the tokenizer. If the tokenizer doesn't recognize
 // a correct token, it will return a token with type ERROR.
 token get_next_token(tokenizer *tokenizer);
+
+#endif

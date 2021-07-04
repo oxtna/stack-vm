@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 #include <stdbool.h>
 
 typedef struct _stack stack;
@@ -16,3 +19,5 @@ int s_peek(stack *s);
 
 // Return true if the stack is empty, false if it is not.
 bool s_is_empty(stack *s);
+
+#endif
