@@ -1,6 +1,6 @@
 # TODO
 
-* lexer
+* parser
 * expressions
 * command line arguments processing
 * error catching
