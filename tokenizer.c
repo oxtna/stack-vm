@@ -34,12 +34,12 @@ token get_next_token(tokenizer *tokenizer)
 	size_t current_buffer_index = 0;
 
 	int c = *tokenizer->current_position;
-	// END
+	// TOKEN_END
 	if (c == '\0')
 	{
-		tok.type = END;
+		tok.type = TOKEN_END;
 	}
-	// WHITESPACE
+	// TOKEN_WHITESPACE
 	else if (isblank(c))
 	{
 		c = *(++(tokenizer->current_position));
@@ -50,9 +50,9 @@ token get_next_token(tokenizer *tokenizer)
 			c = *(++(tokenizer->current_position));
 		}
 
-		tok.type = WHITESPACE;
+		tok.type = TOKEN_WHITESPACE;
 	}
-	// NUM
+	// TOKEN_NUM
 	else if (isdigit(c))
 	{
 		tok.text[current_buffer_index] = (char)c;
@@ -66,11 +66,11 @@ token get_next_token(tokenizer *tokenizer)
 		}
 		if (isblank(c) || c == '\0')
 		{
-			tok.type = NUM;
+			tok.type = TOKEN_NUM;
 		}
 		else
 		{
-			tok.type = ERROR;
+			tok.type = TOKEN_ERROR;
 		}
 	}
 	// other text tokens
@@ -95,18 +95,18 @@ token get_next_token(tokenizer *tokenizer)
 					tok.type = (token_type)i;
 					break;
 				}
-				tok.type = ERROR;
+				tok.type = TOKEN_ERROR;
 			}
 		}
 		else
 		{
-			tok.type = ERROR;
+			tok.type = TOKEN_ERROR;
 		}
 	}
 	// token not recognized
 	else
 	{
-		tok.type = ERROR;
+		tok.type = TOKEN_ERROR;
 	}
 
 	return tok;

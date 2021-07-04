@@ -2,17 +2,17 @@
 
 typedef enum token_type
 {
-	ERROR = -1,
-	PUSH,
-	POP,
-	DUP,
-	ADD,
-	IFEQ,
-	JUMP,
-	PRINT,
-	NUM,
-	WHITESPACE,
-	END
+	TOKEN_ERROR = -1,
+	TOKEN_PUSH,
+	TOKEN_POP,
+	TOKEN_DUP,
+	TOKEN_ADD,
+	TOKEN_IFEQ,
+	TOKEN_JUMP,
+	TOKEN_PRINT,
+	TOKEN_NUM,
+	TOKEN_WHITESPACE,
+	TOKEN_END
 } token_type;
 
 typedef struct
