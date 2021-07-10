@@ -1,2 +1,4 @@
-.vscode/
-stack-vm
+# ignore binaries and other build result files
+build/
+# ignore unnecessary VS Code files
+settings.json
