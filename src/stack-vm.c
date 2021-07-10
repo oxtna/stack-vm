@@ -11,6 +11,10 @@ int main(int argc, char *argv[])
 {
 	if (argc > 1) // TODO: process the arguments
 	{
+		for (int i = 1; i < argc; i++)
+		{
+			fprintf(stdout, "arg #%d: `%s`\n", i, argv[i]);
+		}
 	}
 	else // run as a REPL
 	{
@@ -23,12 +27,12 @@ int main(int argc, char *argv[])
 			{
 				// remove trailing newline character
 				line_buffer[strcspn(line_buffer, "\n")] = 0;
-				tokenizer *tokenizer = init_tokenizer(line_buffer);
-				token t = get_next_token(tokenizer);
+				tokenizer *tok = init_tokenizer(line_buffer);
+				token t = get_next_token(tok);
 				while (t.type != TOKEN_END && t.type != TOKEN_ERROR)
 				{
 					fprintf(stdout, "\n%d %s\n", t.type, t.text);
-					t = get_next_token(tokenizer);
+					t = get_next_token(tok);
 				}
 			}
 			// TODO: catch errors
