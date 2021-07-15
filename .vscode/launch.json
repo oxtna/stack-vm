@@ -8,7 +8,7 @@
 			"name": "gdb - debug build result",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/build/stack-vm",
+			"program": "${workspaceFolder}/stack-vm",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
