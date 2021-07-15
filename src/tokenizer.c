@@ -27,87 +27,87 @@ tokenizer *init_tokenizer(char *input)
 	return tok_state;
 }
 
-token get_next_token(tokenizer *tokenizer)
+token get_next_token(tokenizer *tok)
 {
-	token tok;
-	memset(tok.text, 0, TOKEN_STRING_LENGTH + 1);
+	token t;
+	memset(t.text, 0, TOKEN_STRING_LENGTH + 1);
 	size_t current_buffer_index = 0;
 
-	int c = *tokenizer->current_position;
+	int c = *tok->current_position;
 	// TOKEN_END
 	if (c == '\0')
 	{
-		tok.type = TOKEN_END;
+		t.type = TOKEN_END;
 	}
 	// TOKEN_WHITESPACE
 	else if (isblank(c))
 	{
-		c = *(++(tokenizer->current_position));
+		c = *(++(tok->current_position));
 
 		// skip all other continuous whitespace characters
 		while (isblank(c))
 		{
-			c = *(++(tokenizer->current_position));
+			c = *(++(tok->current_position));
 		}
 
-		tok.type = TOKEN_WHITESPACE;
+		t.type = TOKEN_WHITESPACE;
 	}
 	// TOKEN_NUM
 	else if (isdigit(c))
 	{
-		tok.text[current_buffer_index] = (char)c;
+		t.text[current_buffer_index] = (char)c;
 		current_buffer_index++;
-		c = *(++(tokenizer->current_position));
+		c = *(++(tok->current_position));
 		while (isdigit(c) && current_buffer_index < TOKEN_STRING_LENGTH)
 		{
-			tok.text[current_buffer_index] = (char)c;
+			t.text[current_buffer_index] = (char)c;
 			current_buffer_index++;
-			c = *(++(tokenizer->current_position));
+			c = *(++(tok->current_position));
 		}
 		if (isblank(c) || c == '\0')
 		{
-			tok.type = TOKEN_NUM;
+			t.type = TOKEN_NUM;
 		}
 		else
 		{
-			tok.type = TOKEN_ERROR;
+			t.type = TOKEN_ERROR;
 		}
 	}
 	// other text tokens
 	else if (islower(c))
 	{
 		//strncpy(tok.text, tokenizer->current_position, TOKEN_STRING_LENGTH);
-		tok.text[current_buffer_index] = (char)c;
+		t.text[current_buffer_index] = (char)c;
 		current_buffer_index++;
-		c = *(++(tokenizer->current_position));
+		c = *(++(tok->current_position));
 		while (islower(c) && current_buffer_index < TOKEN_STRING_LENGTH)
 		{
-			tok.text[current_buffer_index] = (char)c;
+			t.text[current_buffer_index] = (char)c;
 			current_buffer_index++;
-			c = *(++(tokenizer->current_position));
+			c = *(++(tok->current_position));
 		}
 		if (isblank(c) || c == '\0')
 		{
 			for (size_t i = 0; i < sizeof(token_texts) / sizeof(char *); i++)
 			{
-				if (!strcmp(tok.text, token_texts[i]))
+				if (!strcmp(t.text, token_texts[i]))
 				{
-					tok.type = (token_type)i;
+					t.type = (token_type)i;
 					break;
 				}
-				tok.type = TOKEN_ERROR;
+				t.type = TOKEN_ERROR;
 			}
 		}
 		else
 		{
-			tok.type = TOKEN_ERROR;
+			t.type = TOKEN_ERROR;
 		}
 	}
 	// token not recognized
 	else
 	{
-		tok.type = TOKEN_ERROR;
+		t.type = TOKEN_ERROR;
 	}
 
-	return tok;
+	return t;
 }
