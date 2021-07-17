@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+// This array is ordered so that the `push`'s index is equal to the TOKEN_PUSH value,
+// `pop`'s index is equal to the TOKEN_POP value, and so on.
 static const char *const token_texts[] = {
 	"push",
 	"pop",
@@ -10,8 +12,7 @@ static const char *const token_texts[] = {
 	"add",
 	"ifeq",
 	"jump",
-	"print"
-};
+	"print"};
 
 struct _tokenizer_state
 {
@@ -39,6 +40,12 @@ token get_next_token(tokenizer *tok)
 	{
 		t.type = TOKEN_END;
 	}
+	// TOKEN_NEWLINE
+	else if (c == '\n')
+	{
+		t.type = TOKEN_NEWLINE;
+		c = *(++(tok->current_position));
+	}
 	// TOKEN_WHITESPACE
 	else if (isblank(c))
 	{
@@ -64,7 +71,7 @@ token get_next_token(tokenizer *tok)
 			current_buffer_index++;
 			c = *(++(tok->current_position));
 		}
-		if (isblank(c) || c == '\0')
+		if (isblank(c) || c == '\0' || c == '\n')
 		{
 			t.type = TOKEN_NUM;
 		}
@@ -76,7 +83,6 @@ token get_next_token(tokenizer *tok)
 	// other text tokens
 	else if (islower(c))
 	{
-		//strncpy(tok.text, tokenizer->current_position, TOKEN_STRING_LENGTH);
 		t.text[current_buffer_index] = (char)c;
 		current_buffer_index++;
 		c = *(++(tok->current_position));
@@ -86,8 +92,11 @@ token get_next_token(tokenizer *tok)
 			current_buffer_index++;
 			c = *(++(tok->current_position));
 		}
-		if (isblank(c) || c == '\0')
+		if (isblank(c) || c == '\0' || c == '\n')
 		{
+			// set token type to TOKEN_ERROR in advance so it will have the correct
+			// type if it's not overwritten after it finds a match
+			t.type = TOKEN_ERROR;
 			for (size_t i = 0; i < sizeof(token_texts) / sizeof(char *); i++)
 			{
 				if (!strcmp(t.text, token_texts[i]))
@@ -95,7 +104,6 @@ token get_next_token(tokenizer *tok)
 					t.type = (token_type)i;
 					break;
 				}
-				t.type = TOKEN_ERROR;
 			}
 		}
 		else

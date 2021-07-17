@@ -15,6 +15,7 @@ typedef enum token_type
 	TOKEN_PRINT,
 	TOKEN_NUM,
 	TOKEN_WHITESPACE,
+	TOKEN_NEWLINE,
 	TOKEN_END
 } token_type;
 
