@@ -7,7 +7,7 @@ SOURCE = $(wildcard src/*.c)
 OBJ = $(SOURCE:src/%.c=$(BUILD_DIR)/%.o)
 DEP = $(OBJ:%.o=%.d)
 
-.PHONY all
+.PHONY : all
 all : $(BINARY)
 
 $(BINARY) : $(BUILD_DIR)/$(BINARY)
