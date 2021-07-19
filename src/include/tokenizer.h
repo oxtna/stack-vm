@@ -19,7 +19,7 @@ typedef enum token_type
 	TOKEN_END
 } token_type;
 
-typedef struct
+typedef struct token
 {
 	token_type type;
 	char text[TOKEN_STRING_LENGTH + 1];
