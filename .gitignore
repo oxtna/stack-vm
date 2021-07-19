@@ -1,4 +1,6 @@
 # ignore binaries and other build result files
 build/
+# ignore final binary
+stack-vm
 # ignore unnecessary VS Code files
 settings.json
